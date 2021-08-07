@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+
+<form method='POST'> 
+<!--Защита CSRF-->  
+{% csrf_token %}
+{{form.as_p}}
+<button type='submit' class='btn btn-primary'>Login</button>
+</form>
+
+
+{% endblock %}

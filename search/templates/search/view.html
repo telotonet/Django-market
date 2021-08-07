@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block navbar %}
+{% include 'base/navbar.html' with brand_name='Products List!' %}
+{% endblock %}
+
+{% block content %}
+
+{%if request.GET.search%}
+<div class='col-12 mb-3'>
+    Results for <b>{{request.GET.search}}</b>
+</div>
+{% else %}
+        Воспользуйтесь поиском!
+        {% include 'search/search-forms.html' %}
+        
+{% endif %}
+
+<div class='row'>
+{% for el in product_list %}
+
+<div class='col'>
+{{forloop.counter}}
+<div class="card" style="width: 18rem;">
+  <img src="{{el.image.url}}" class="card-img-top " alt="...">
+  <div class="card-body">
+    <h5 class="card-title ">{{el.title}}</h5>
+    <p class="card-text">{{el.description}}</p>
+    <p class="card-text small">Tags: 
+    {% for elx in el.tag_set.all %} 
+    <span class="badge bg-dark">{{ elx.title }}</span>  
+    {%endfor%}</p>
+    <a href="{{el.get_absolute_url}}" class="btn btn-primary">Buy for ${{el.price}}</a>
+  </div>
+  </div>
+</div>
+
+
+{% endfor %}
+</div>
+{% endblock %}

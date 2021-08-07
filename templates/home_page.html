@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block navbar %}
+    {% include 'base/navbar.html' with brand_name='HOMEPAGE' %}
+{% endblock %}
+
+{% block content %}
+
+<div class='text-center'>
+  <h1>{{title}}</h1>
+</div>
+<div class='row'>
+  <div class='col'>
+  </div>
+</div>
+{% if request.user.is_authenticated %}
+<div class="row">
+  <div class="col">
+    <h1>Premium content</h1>
+  </div>
+</div>
+  {% endif %}
+{% endblock %}

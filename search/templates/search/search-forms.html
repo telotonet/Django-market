@@ -1,0 +1,14 @@
+<form method='GET' action='{% url "search" %}' class="d-flex">
+<div class="form-check form-switch d-fluid">
+
+{% comment %} ЧЕКБОКС, ВКЛЮЧАЕТ ПОИСК ПО ОПИСАНИЮ! {% endcomment %}
+  <input class="form-check-input" name='indesc' type="checkbox" value="True" id="flexCheckDefault" {%if request.GET.indesc %}checked{%endif%}>
+  
+</div>
+    <div class='input-group'>
+    <input class="form-control" name='search' type="search" placeholder="Search" aria-label="Search" value='{{request.GET.search}}'>
+    <span class='input-group-btn'>
+    <button class="btn btn-outline-success" type="submit">Search</button>
+    </span>
+    </div>
+</form>

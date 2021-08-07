@@ -1,0 +1,26 @@
+{% if address_qs.exists %}
+    <div class='col-6'>
+        <form class='form' method='POST' action='{{action_url}}'> {% csrf_token %}
+
+        {% if next_url %}
+        <input type='hidden' name='next' value='{{next_url}}'>
+        {% endif %}
+
+        {% if address_type %}
+        <input type='hidden' name='address_type' value={{address_type}}>
+        {% endif %}
+
+            {% for el in address_qs %}
+
+                <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" value='{{el.pk}}' name="shipping_address" id="address-{{el.pk}}">
+                <label class="form-check-label" for="address-{{el.pk}}">{{el.address_line_1}}</label>
+                </div>  
+                    
+                </br>
+
+            {% endfor %}
+            <button type='submit' class='btn btn-success'> Use address </button>
+        </form>
+    </div>
+{% endif %}

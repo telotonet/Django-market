@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if not billing_profile %}
+
+
+      <div class="d-grid gap-2 col-6 mx-auto">
+          {% include 'accounts/snippets/login_form.html' with form=login_form next_url=request.build_absolute_uri %}
+          ---- OR CONTINUE AS GUEST ----
+
+          {% url 'guest_register' as guest_register_url %}
+          {% include 'addresses/form.html' with form=guest_form next_url=request.build_absolute_uri action_url=guest_register_url %}
+      </div>
+
+
+{% else %}
+
+    {% if not object.shipping_address %}
+        <div class='row'>
+          <div class='mx-auto col-10'>
+            <h1 class='trinatsat'> Shipping Address </h1>
+            <hr>
+
+            <div class='row'>
+              <div class='col-6'>
+                {% url 'address' as address %}
+                {% include 'addresses/form.html' with address_type='shipping' form=address_form next_url=request.build_absolute_uri action_url=address %}
+              </div>
+              {% url 'reuse_address' as reuse_address %}
+            {% include 'addresses/addresses_form.html' with address_qs=address_qs address_type='shipping' action_url=reuse_address %}
+            </div>
+          </div>
+        </div>
+    {% elif not object.billing_address %}
+        <div class='row'>
+          <div class='mx-auto col-10'>
+            <h1> Billing Address </h1>
+            <hr>
+            <div class='row'>
+              <div class='col-6'>
+            {% url 'address' as address %}
+              {% include 'addresses/form.html' with address_type='billing' form=address_form next_url=request.build_absolute_uri action_url=address %}
+              </div>
+              {% url 'reuse_address' as reuse_address %}
+              {% include 'addresses/addresses_form.html' with action_url=reuse_address address_qs=address_qs next_url=request.build_absolute_uri address_type='billing' %}
+          </div>
+        </div>
+      </div>
+    {% else %}
+
+    <h1>Finalize Checkout</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col"></th>
+          <th scope="col"></th> 
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row"></th>
+          <td>Cart Items</td>
+          <td>{% for el in object.cart.products.all %}<a href='{{el.get_absolute_url}}'>{{el}}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</td>   
+                
+        </tr>
+          <tr>
+          <th scope="row"></th>
+          <td>Shipping address:</td>
+          <td>{{object.shipping_address.get_address}}</td>     
+        </tr>
+          <tr>
+          <th scope="row"></th>
+          <td>Shipping total:</td>
+          <td>{{object.billing_address.get_address}}</td>     
+        </tr>
+        <tr>
+          <th scope="row"></th>
+          <td>Checkout total:</td>
+          <td>{{object.total}} $</td>     
+        </tr>
+        <tr>
+          <th scope="row"></th>
+          <td>Checkout Status:</td>
+          <td>{{object.status}}</td>     
+        </tr>
+        <tr>
+          <th scope="row"></th>
+          <td>Shipping total:</td>
+          <td>{{object.shipping_total}} $</td>     
+        </tr>
+      </tbody>
+    </table>
+
+
+    <form class='form' method='POST' action=""> {% csrf_token %}
+    <button type='submit' class='btn btn-success'>Checkout</button>
+    </form>
+
+
+    {% endif %}
+
+{% endif %}
+
+{% endblock %}
