@@ -1,11 +1,12 @@
-<form method='POST' action='{% url "cart_update" %}' class="d-flex">
+<form method='POST' class='form-product-ajax' action='{% url "cart_update" %}' class="d-flex">
                         {% csrf_token %}
 
     <input type='hidden' name='product_id' value='{{product.pk}}'>
+    <span class='submit-span'>
     {% if product in cart.products.all %}
         <button type="submit" class="btn btn-warning">Delete from cart</button>
     {% else %}
         <button type="submit" class="btn btn-success">Add to cart</button>
     {% endif %}
-
+    </span>
 </form>

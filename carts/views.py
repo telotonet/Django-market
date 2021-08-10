@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Cart
+from django.http import JsonResponse
 from accounts.models import Guest
 from django.http.response import Http404
 from products.models import Product
@@ -16,18 +17,30 @@ def cart_home(request):
     return render(request, "carts/home.html", {'cart':cart_obj})
 
 def cart_update(request):
-    try:
-        product_pk = request.POST.get('product_id')
-        product_obj = Product.objects.get(pk=product_pk)
+    product_pk = request.POST.get('product_id')
+    if product_pk is not None:
+        try:
+            product_obj = Product.objects.get(pk=product_pk)
+        except Product.DoesNotExist:
+            return redirect('cart_home')
         cart_obj, new_obj = Cart.objects.new_or_get(request)
         if product_obj in cart_obj.products.all():
             cart_obj.products.remove(product_obj)
+            added = False
         else:
             cart_obj.products.add(product_obj)
+            added = True
         request.session['cart_items'] = cart_obj.products.count()
+        if request.is_ajax:
+            print('hello, ajax!')
+            json_data = {
+                "added": added,
+                'removed': not added,
+                "cartItemCounter": cart_obj.products.count(),
+            }
+            return JsonResponse(json_data)
         return redirect('cart_home')
-    except:
-        return redirect('cart_home')
+    return redirect('cart_home')
     
 
     

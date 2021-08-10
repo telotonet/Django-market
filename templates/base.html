@@ -32,5 +32,46 @@
 
 
 {% include 'base/js.html' %}
+<script>
+$(document).ready(function(){
+
+    var productForm = $('.form-product-ajax')
+    
+    productForm.submit(function(event){
+        event.preventDefault();
+        console.log('Form is not sending')
+        var thisForm = $(this)
+        var actionEndpoint = thisForm.attr('action');
+        var httpMethod = thisForm.attr('method');
+        var formData = thisForm.serialize();
+
+        $.ajax({
+            url: actionEndpoint,
+            method: httpMethod,
+            data: formData,
+            success: function(data){
+                console.log('success', data)
+                console.log('added', data.added)
+                console.log('removed', data.removed)
+                var submitSpan = thisForm.find('.submit-span')
+                console.log(submitSpan.html())
+                if (data.added){
+                    submitSpan.html('<button type="submit" class="btn btn-warning">Delete from cart</button>')
+                } else {
+                    submitSpan.html('<button type="submit" class="btn btn-success">Add to cart</button>')
+                 }
+                var cartCounter = $('.navbar-cart-counter')
+                cartCounter.text(data.cartItemCounter)
+            },
+            error: function(errorData){
+                console.log('error', errorData)
+            }
+
+        })
+
+    })
+})
+
+</script>
 </body>
 </html>
