@@ -39,37 +39,78 @@ $(document).ready(function(){
     
     productForm.submit(function(event){
         event.preventDefault();
-        console.log('Form is not sending')
         var thisForm = $(this)
-        var actionEndpoint = thisForm.attr('action');
+        // var actionEndpoint = thisForm.attr('action'); // API Endpoint
         var httpMethod = thisForm.attr('method');
         var formData = thisForm.serialize();
-
+        var actionEndpoint = thisForm.attr('data-endpoint');
         $.ajax({
             url: actionEndpoint,
             method: httpMethod,
             data: formData,
             success: function(data){
-                console.log('success', data)
-                console.log('added', data.added)
-                console.log('removed', data.removed)
+                var currentPath = window.location.href
+                console.log(currentPath)
                 var submitSpan = thisForm.find('.submit-span')
-                console.log(submitSpan.html())
                 if (data.added){
-                    submitSpan.html('<button type="submit" class="btn btn-warning">Delete from cart</button>')
+                    
+                    submitSpan.html('<button type="submit" class="btn btn-warning">Remove</button>')
                 } else {
                     submitSpan.html('<button type="submit" class="btn btn-success">Add to cart</button>')
                  }
                 var cartCounter = $('.navbar-cart-counter')
                 cartCounter.text(data.cartItemCounter)
+                if (currentPath.indexOf('cart') != -1) {
+                    refreshCart()
+                }
             },
             error: function(errorData){
-                console.log('error', errorData)
-            }
+                console.log('error: ', errorData)
+            }})})
 
-        })
+        function refreshCart(){
+            console.log('refresh cart is ready')
+            var cartTable = $('.cart-table')
+            var cartBody  = cartTable.find('.cart-body')
+            var cartTotal = $('.cart-total')
+            var cartProducts = cartBody.find('.cart-products')
+            var currentUrl = window.location.href
 
-    })
+
+
+            var refreshCartUrl    = '/api/cart/'
+            var refreshCartMethod = 'GET'
+            var data = {}
+            $.ajax({
+                url: refreshCartUrl,
+                method: refreshCartMethod,
+                data: data,
+                success: function(data){
+                    var hiddentCartItemRemoveForm = $('.cart-item-remove-form')
+                    if (data.products.length > 0)
+                    {
+                    cartProducts.html('')
+                    i = data.products.length
+                    $.each(data.products, function(index,value){
+                        console.log(value)
+                        var newCartItemRemove = hiddentCartItemRemoveForm.clone()
+                        newCartItemRemove.css('display', 'block')
+                        newCartItemRemove.find('.cart-item-product-id').val(value.id)
+                        cartBody.prepend('<tr><th scope="row">' + i + '</th><td><a href="' + value.url + '">' + value.title + '</a></td>' + '<td>' + value.description + '</td><td>' + value.price + ' $ </td>'  + '<td>' + newCartItemRemove.html() + '</td></tr>')
+                        i--
+                    })
+                    cartTotal.text(data.total)
+                    } else {
+                        window.location.href = currentUrl
+                    }
+
+                },
+                error: function(errorData){
+                    console.log('error')
+                    console.log(errorData)
+                }})
+                            }
+
 })
 
 </script>

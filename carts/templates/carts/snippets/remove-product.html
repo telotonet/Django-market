@@ -1,0 +1,5 @@
+<form method='POST' class='form-product-ajax' data-endpoint='{% url "cart_update" %}' action='{% url "cart_update" %}' class="d-flex">
+                        {% csrf_token %}
+    <input class='cart-item-product-id' type='hidden' name='product_id' value='{{product_pk}}'>
+        <button type="submit" class="btn-close btn-close-white"></button>
+</form>

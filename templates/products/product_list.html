@@ -21,7 +21,10 @@
     {% for elx in el.tag_set.all %} 
     <span class="badge bg-dark">{{ elx.title }}</span>  
     {%endfor%}</p>
+    <div class="d-grid gap-2 d-md-block">
     <a href="{{el.get_absolute_url}}" class="btn btn-primary">Buy for ${{el.price}}</a>
+    {% include 'products/update_cart.html' with product=el cart=cart %}
+  </div>
   </div>
   </div>
 </div>

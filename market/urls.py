@@ -9,10 +9,12 @@ from django.contrib.auth.views import LogoutView
 from .views import home_page, about_page, contact_page
 from addresses.views import checkout_address_create_view, checkout_address_reuse_view
 from accounts.views import login_page, register_page, guest_login_view
+from carts.views import cart_detail_api_view
 
 urlpatterns = [
     path('', home_page, name='home'),
     path('register/guest/', guest_login_view, name='guest_register'),
+    path('api/cart/', cart_detail_api_view, name='cart_detail_api'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('products/', include('products.urls')),
     path('search/', include('search.urls')),
