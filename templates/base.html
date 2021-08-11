@@ -34,9 +34,94 @@
 {% include 'base/js.html' %}
 <script>
 $(document).ready(function(){
+    ///
+    var contactForm = $(".contact-form")
+    var contactMethod = contactForm.attr("method")
+    var contactUrl = contactForm.attr("action")
+   
 
+    function sendContact(submitBtn, defaultText, doSubmit){
+        if (doSubmit){
+            submitBtn.addClass('disabled')
+            submitBtn.html('<i class="fas fa-spinner spinning"></i> Sending... ')
+        } else {
+                submitBtn.removeClass('disabled')
+                submitBtn.html(defaultText)
+        }}
+
+    contactForm.submit(function(){
+        event.preventDefault()
+        var contactBtn = contactForm.find("[type='submit']")
+        var contactBtnTxt = contactBtn.text()
+        var contactFormData = contactForm.serialize()
+        var thisContactForm = $(this)
+        sendContact(contactBtn, "", true)
+        $.ajax({
+            method: contactMethod,
+            url: contactUrl,
+            data: contactFormData,
+            success: function(data){
+
+                thisContactForm[0].reset()
+                $.alert({
+                    title: "Success",
+                    content: data.message,
+                    theme: 'modern'
+                })
+                setTimeout(function(){
+                    sendContact(contactBtn, contactBtnTxt, false)}, 500)
+            },
+            error: function(error){
+                
+                var jsonData = error.responseJSON
+                var msg = ''
+                $.each(jsonData, function(key, value){
+                    msg += "<li>" + value[0].message + "</li>" + "</br>"
+                })
+               $.alert({
+                    title: "Error",
+                    content: msg,
+                    theme: 'modern'
+                })
+                 setTimeout(function(){
+                    sendContact(contactBtn, contactBtnTxt, false)}, 500)
+            }
+        })
+    })
+
+
+    /// Auto Search
+    var searchForm = $(".search-form")
+    var searchInput = searchForm.find("[name='search']")
+    var typingTimer;
+    var typingInterval = 500
+    var searchBtn = searchForm.find("[type='submit']")
+
+    searchInput.keyup(function(event){
+        clearTimeout(typingTimer)
+        typingTimer = setTimeout(performSearch, typingInterval)
+    })
+    searchInput.keydown(function(event){
+        clearTimeout(typingTimer)
+    })
+
+    function doSearch(){
+        searchBtn.addClass('disabled')
+        searchBtn.html('<i class="fas fa-spinner spinning"></i> Searching... ')
+    }
+
+    function performSearch(){
+        doSearch()
+        var query = searchInput.val()
+        setTimeout(function(){
+            window.location.href= "/search/?search=" + query
+        }, 1000)
+        
+    }
+
+
+    /// Cart + Add Products
     var productForm = $('.form-product-ajax')
-    
     productForm.submit(function(event){
         event.preventDefault();
         var thisForm = $(this)
@@ -65,7 +150,12 @@ $(document).ready(function(){
                 }
             },
             error: function(errorData){
-                console.log('error: ', errorData)
+                $.alert({
+                    title: "Oops...",
+                    content: "An error occurred. Please try again later :)",
+                    theme: 'dark theme'
+
+                })
             }})})
 
         function refreshCart(){
@@ -106,8 +196,12 @@ $(document).ready(function(){
 
                 },
                 error: function(errorData){
-                    console.log('error')
-                    console.log(errorData)
+                $.alert({
+                    title: "Oops...",
+                    content: "An error occurred. Please try again later :)",
+                    theme: 'dark theme'
+
+                })
                 }})
                             }
 

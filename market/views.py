@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render
 from .forms import ContactForm
+from django.http.response import JsonResponse, HttpResponse
 from django.contrib.auth.decorators import login_required
 
 
@@ -17,10 +18,13 @@ def contact_page(request):
             'form': contact_form}
     
     if contact_form.is_valid():
-        print(contact_form.cleaned_data['fullname'])
-        print(contact_form.cleaned_data['email'])
-        print(contact_form.cleaned_data['content'])
-        
+        print(contact_form.cleaned_data)
+        if request.is_ajax():
+            return JsonResponse({"message":"Thank you for your submission."})
+    if contact_form.errors:
+        errors = contact_form.errors.as_json()
+        if request.is_ajax():
+            return HttpResponse(errors, status=400, content_type='application/json')    
     return render(request, 'contact/view.html', context)
 
 

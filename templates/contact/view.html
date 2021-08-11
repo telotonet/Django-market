@@ -8,17 +8,18 @@
 {% block content %}
 
   <div class='text-center'>
-  <h1>{{title}}</h1>
+  <h1 class='contact-title'>{{title}}</h1>
   </div>
   <div class='container'>
   <div class='row'>
   <div class='col'>
-  <form method='POST'>
-  {% csrf_token %}
-  <p> {{form.as_p}} </p>
-  <div class='col-sm-6 col-12'>
-  </div>
-  <input type='submit' value='Send'>
-  </form>  
+        <div class='col-md-6 mx-auto col-12'>
+          <form class='contact-form mx-auto' method='POST' action='{% url "contact" %}'>
+          {% csrf_token %}
+          <p> {{form.as_p}} </p>
+          <div class="d-grid gap-2">
+          <button type='submit' class='btn btn-primary' >Send</button>
+          </div>
+          </form>  
 
 {% endblock %}
