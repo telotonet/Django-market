@@ -33,6 +33,7 @@ def cart_update(request):
         cart_obj, new_obj = Cart.objects.new_or_get(request)
         if product_obj in cart_obj.products.all():
             cart_obj.products.remove(product_obj)
+            
             added = False
         else:
             cart_obj.products.add(product_obj)

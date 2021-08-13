@@ -13,7 +13,7 @@ class Address(models.Model):
     billing_profile = models.ForeignKey(BillingProfile, on_delete=models.CASCADE)
     address_type    = models.CharField(max_length=120, choices=ADDRESS_TYPES)
     address_line_1  = models.CharField(max_length=120)
-    address_line_2  = models.CharField(max_length=120, blank=True, null=True)
+    address_line_2  = models.CharField(max_length=120, blank=True, null=True, default='')
     city            = models.CharField(max_length=120)
     country         = models.CharField(max_length=120, default = 'United States of America')
     state           = models.CharField(max_length=120)

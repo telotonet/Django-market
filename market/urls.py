@@ -8,7 +8,7 @@ from django.contrib.auth.views import LogoutView
 
 from .views import home_page, about_page, contact_page
 from addresses.views import checkout_address_create_view, checkout_address_reuse_view
-from accounts.views import login_page, register_page, guest_login_view
+from accounts.views import LoginView, RegisterView, guest_login_view
 from carts.views import cart_detail_api_view
 
 urlpatterns = [
@@ -21,8 +21,8 @@ urlpatterns = [
     path('cart/', include('carts.urls')),
     path('checkout/address/reuse/', checkout_address_reuse_view, name='reuse_address'),
     path('checkout/address/create/', checkout_address_create_view, name='address'),
-    path('login/', login_page, name='login'),
-    path('register/', register_page, name='register'),
+    path('login/', LoginView.as_view(), name='login'),
+    path('register/', RegisterView.as_view(), name='register'),
     path('about/', about_page, name='about'),
     path('contact/', contact_page, name='contact'),
     path('admin/', admin.site.urls),
