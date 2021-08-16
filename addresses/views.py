@@ -42,7 +42,6 @@ def checkout_address_reuse_view(request):
                 qs = Address.objects.filter(billing_profile = billing_profile, pk = shipping_address)
                 if qs.exists(): 
                     request.session[address_type + '_address_id'] = shipping_address
-                    print('xuy')
                     if is_safe_url(redirect_path, request.get_host()):
                         return redirect('checkout')
     return redirect('checkout')

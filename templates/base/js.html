@@ -16,3 +16,13 @@
 
 <!-- Custom JS code -->
 <script src="{% static 'js/ecommerce.js' %}"></script>
+
+<!-- Custom JS STRIPE code -->
+<script src="{% static 'js/ecommerce.billing.js' %}"></script>
+
+<!-- JS Render lib -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jsrender/1.0.11/jsrender.min.js'></script>
+{% include 'base/js_templates.html' %}
+
+<!-- Stripe Payment's -->
+<script src="https://js.stripe.com/v3/"></script>

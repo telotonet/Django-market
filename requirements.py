@@ -23,5 +23,13 @@ python manage.py runserver
 """
 1. pip install django
 2. pip install pillow
+3. pip install stripe
 
 """
+
+
+'ПУБЛИЧНЫЙ КЛЮЧ СТРАЙП'
+"pk_test_51JOQm5Faw5MMBhhd20AkSufrvwbK47nk4WW3k489cWeAkKT5o42dqLdBa4YB7wltQio3RNDRznxvtBMaxT56g4Kd00eQX4tznK"
+
+'СЕКРЕТНЫЙ КЛЮЧ СТРАЙП'
+"sk_test_51JOQm5Faw5MMBhhdWTgtpl7aQMmxYoKGBfkK55Im9ePD7a0iL73SIEOmG80ghCP8Bb68273CRcvx6LdKlSMh1v2u00mjfLJdUG"

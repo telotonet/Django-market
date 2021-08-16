@@ -8,7 +8,7 @@ $(document).ready(function(){
     function sendContact(submitBtn, defaultText, doSubmit){
         if (doSubmit){
             submitBtn.addClass('disabled')
-            submitBtn.html('<i class="fas fa-spinner spinning"></i> Sending... ')
+            submitBtn.html("<i class='fa fa-spin fa-spinner'></i> Sending... ")
         } else {
                 submitBtn.removeClass('disabled')
                 submitBtn.html(defaultText)
@@ -34,7 +34,7 @@ $(document).ready(function(){
                     theme: 'modern'
                 })
                 setTimeout(function(){
-                    sendContact(contactBtn, contactBtnTxt, false)}, 500)
+                    sendContact(contactBtn, contactBtnTxt, false)}, 1000)
             },
             error: function(error){
                 
@@ -72,7 +72,7 @@ $(document).ready(function(){
 
     function doSearch(){
         searchBtn.addClass('disabled')
-        searchBtn.html('<i class="fas fa-spinner spinning"></i> Searching... ')
+        searchBtn.html("<i class='fa fa-spin fa-spinner'></i> Searching... ")
     }
 
     function performSearch(){

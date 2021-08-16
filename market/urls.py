@@ -10,9 +10,12 @@ from .views import home_page, about_page, contact_page
 from addresses.views import checkout_address_create_view, checkout_address_reuse_view
 from accounts.views import LoginView, RegisterView, guest_login_view
 from carts.views import cart_detail_api_view
+from billing.views import payment_method_view, payment_method_create_view
 
 urlpatterns = [
     path('', home_page, name='home'),
+    path('payment/', payment_method_view, name='payment'),
+    path('payment/create/', payment_method_create_view, name='payment_create'),
     path('register/guest/', guest_login_view, name='guest_register'),
     path('api/cart/', cart_detail_api_view, name='cart_detail_api'),
     path('logout/', LogoutView.as_view(), name='logout'),

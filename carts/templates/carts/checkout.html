@@ -48,6 +48,15 @@
       </div>
     {% else %}
 
+    {% if not has_card %}
+
+      <!--Enter credit Card!-->
+      <div class='col-10 col-md-6 mx-auto'>
+        <h1>Add Payment Method</h1>
+        <div class="stripe-payment-form"  data-token='{{publish_key}}' data-next-url='{{request.build_absolute_uri}}' data-btn-title='Add Payment Method'></div>
+      </div>
+
+    {% else %}
     <h1>Finalize Checkout</h1>
     <table class="table">
       <thead>
@@ -68,6 +77,16 @@
           <th scope="row"></th>
           <td>Shipping address:</td>
           <td>{{object.shipping_address.get_address}}</td>     
+        </tr>
+        <tr>
+          <th scope="row"></th>
+          <td>Payment method:</td>
+          <td>{{billing_profile.default_card}}  (<a href="{{billing_profile.get_payment_method_url}}?next={{request.build_absolute_uri}}"> Change </a> ) </td>     
+        </tr>
+         <tr>
+          <th scope="row"></th>
+          <td>Card TS:</td>
+          <td>{{billing_profile.default_card.timestamp}}</td>     
         </tr>
           <tr>
           <th scope="row"></th>
@@ -97,7 +116,7 @@
     <button type='submit' class='btn btn-success'>Checkout</button>
     </form>
 
-
+    {% endif %}
     {% endif %}
 
 {% endif %}

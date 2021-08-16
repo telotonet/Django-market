@@ -1,12 +1,12 @@
 from django.http.response import Http404
-from django.shortcuts import get_object_or_404, render
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from .models import Product
 from carts.models import Cart
+from analytics.mixins import ObjectViewedMixin
 
 
-class ProductDetailSlugView(DetailView):
+class ProductDetailSlugView(ObjectViewedMixin, DetailView):
     template_name = 'products/product_detail.html'
     queryset = Product.objects.all()
     def get_context_data(self, **kwargs):
@@ -29,6 +29,10 @@ class ProductDetailSlugView(DetailView):
             instance = qs.first()
         except:
             raise Http404("Uhhmmm..")
+        
+        # Signal to analytics
+        # object_viewed_signal.send(instance.__class__, instance=instance, request=request)
+        
         return instance    
     
 class ProductListView(ListView):
@@ -42,6 +46,9 @@ class ProductListView(ListView):
         cart_obj, new_obj = Cart.objects.new_or_get(request)
         context["cart"] = cart_obj
         return context
+    
+    
+    
 # class ProductDetailView(DetailView):
 #     template_name = 'products/product_detail.html'
     

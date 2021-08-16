@@ -46,9 +46,13 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'billing.apps.BillingConfig',
     'addresses.apps.AddressesConfig',
+    'analytics.apps.AnalyticsConfig',
 ]
 
-AUTH_USER_MODEL = 'accounts.User'
+AUTH_USER_MODEL   = 'accounts.User'
+
+STRIPE_SECRET_KEY = "sk_test_51JOQm5Faw5MMBhhdWTgtpl7aQMmxYoKGBfkK55Im9ePD7a0iL73SIEOmG80ghCP8Bb68273CRcvx6LdKlSMh1v2u00mjfLJdUG"
+STRIPE_PUB_KEY    = "pk_test_51JOQm5Faw5MMBhhd20AkSufrvwbK47nk4WW3k489cWeAkKT5o42dqLdBa4YB7wltQio3RNDRznxvtBMaxT56g4Kd00eQX4tznK"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

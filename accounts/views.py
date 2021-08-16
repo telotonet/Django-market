@@ -5,6 +5,8 @@ from .forms import LoginForm, RegisterForm, GuestForm
 from django.views.generic import CreateView, FormView
 from django.utils.http import is_safe_url
 from .models import Guest
+from .signals import user_logged_in
+
 
 def guest_login_view(request):
     form = GuestForm(request.POST or None)
@@ -40,6 +42,7 @@ class LoginView(FormView):
             except:
                 pass
             login(request, user)
+            user_logged_in.send(user.__class__, instance=user, request=request)
             if is_safe_url(redirect_path, request.get_host()):
                 return redirect(redirect_path)
             else:
