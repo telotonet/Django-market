@@ -1,4 +1,5 @@
 $(document).ready(function(){
+
     ///
     var contactForm = $(".contact-form")
     var contactMethod = contactForm.attr("method")

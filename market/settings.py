@@ -47,9 +47,16 @@ INSTALLED_APPS = [
     'billing.apps.BillingConfig',
     'addresses.apps.AddressesConfig',
     'analytics.apps.AnalyticsConfig',
+    'marketing.apps.MarketingConfig',
 ]
 
 AUTH_USER_MODEL   = 'accounts.User'
+
+
+MAILCHIMP_API_KEY = "31c91c7b075a96b3c54ee7fcf1fd28e3-us5"
+MAILCHIMP_DATA_CENTER = "us5"
+MAILCHIMP_EMAIL_LIST_ID = "1815fe83c0"
+
 
 STRIPE_SECRET_KEY = "sk_test_51JOQm5Faw5MMBhhdWTgtpl7aQMmxYoKGBfkK55Im9ePD7a0iL73SIEOmG80ghCP8Bb68273CRcvx6LdKlSMh1v2u00mjfLJdUG"
 STRIPE_PUB_KEY    = "pk_test_51JOQm5Faw5MMBhhd20AkSufrvwbK47nk4WW3k489cWeAkKT5o42dqLdBa4YB7wltQio3RNDRznxvtBMaxT56g4Kd00eQX4tznK"

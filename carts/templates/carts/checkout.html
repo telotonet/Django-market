@@ -83,11 +83,6 @@
           <td>Payment method:</td>
           <td>{{billing_profile.default_card}}  (<a href="{{billing_profile.get_payment_method_url}}?next={{request.build_absolute_uri}}"> Change </a> ) </td>     
         </tr>
-         <tr>
-          <th scope="row"></th>
-          <td>Card TS:</td>
-          <td>{{billing_profile.default_card.timestamp}}</td>     
-        </tr>
           <tr>
           <th scope="row"></th>
           <td>Shipping total:</td>

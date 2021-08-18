@@ -42,9 +42,9 @@
           <a class="nav-link {% if request.path == logout_url %} active {%endif%}" href="{{logout_url}}">Logout</a>
         </li>
         {% endif %}
+        <div class='cart'>
         <li class="nav-item">
           <a class="nav-link {% if request.path == cart_url %} active {%endif%}" href="{{cart_url}}">
-          
          <span class='navbar-cart-counter'> 
           {% if request.session.cart_items != None %}
           {{request.session.cart_items}}
@@ -52,7 +52,7 @@
           </span>
           <i class="fas fa-shopping-cart"></i></a>
         </li>
-
+        </div>
       </ul>
       {% include 'search/search-forms.html' %}
     </div>
