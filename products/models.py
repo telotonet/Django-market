@@ -57,8 +57,6 @@ class Product(models.Model):
     
     def __str__(self) -> str: 
         return self.title
-    def __unicode__(self) -> str:
-        return self.title
     
     
 def product_pre_save_receiver(sender, instance, *args, **kwargs):

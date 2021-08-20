@@ -148,7 +148,7 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT      = 'static_root'
 
-MEDIA_URL        = '/media/'
+MEDIA_URL        = '/media_root/'
 MEDIA_ROOT       = 'media_root'
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

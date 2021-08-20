@@ -2,8 +2,7 @@ from django.shortcuts import redirect, render
 from .forms import ContactForm
 from django.http.response import JsonResponse, HttpResponse
 from django.contrib.auth.decorators import login_required
-
-
+import time
 
 def home_page(request):
     context = { 'title':'Hello world! It is home page!',

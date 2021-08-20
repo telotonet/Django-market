@@ -25,9 +25,20 @@
 
     <div class='container '>
     
-        <div class="cart-item">
-        </div>
+        {% if messages %}
+        <ul class='messages'>
+            {% for message in messages %}
+            <p {% if message.tags %} class="alert alert-{{message.tags}}" {% endif %}>
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %} Important: {% endif %}
+                {{message}}
+            </p>
+            {%endfor%}
+        </ul>
+        {% endif %}
+
+
         {% block content %}
+        
         {% endblock %}
         
     </div>
