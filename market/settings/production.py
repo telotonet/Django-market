@@ -50,7 +50,8 @@ INSTALLED_APPS = [
 ]
 
 AUTH_USER_MODEL   = 'accounts.User'
-
+LOGIN_URL = 'login'
+LOGOUT_REDIRECT_URL = '/'
 
 MAILCHIMP_API_KEY = "31c91c7b075a96b3c54ee7fcf1fd28e3-us5"
 MAILCHIMP_DATA_CENTER = "us5"
@@ -69,8 +70,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
-LOGOUT_REDIRECT_URL = '/'
 
 ROOT_URLCONF = 'market.urls'
 
@@ -104,10 +103,12 @@ DATABASES = {
 }
 
 
+
 import dj_database_url
 db_from_env = dj_database_url.config() #postgreSQL Database in heroku
 DATABASES['default'].update(db_from_env)
 DATABASES['default']['CONN_MAX_AGE'] = 500
+
 
 
 

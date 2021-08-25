@@ -50,6 +50,8 @@ INSTALLED_APPS = [
 ]
 
 AUTH_USER_MODEL   = 'accounts.User'
+LOGIN_URL = 'login'
+LOGOUT_REDIRECT_URL = '/'
 
 
 MAILCHIMP_API_KEY = "31c91c7b075a96b3c54ee7fcf1fd28e3-us5"
@@ -70,7 +72,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-LOGOUT_REDIRECT_URL = '/'
 
 ROOT_URLCONF = 'market.urls'
 

@@ -32,4 +32,4 @@ def payment_method_create_view(request):
         if token is not None:
             Card.objects.add_new(billing_profile, token)
         return JsonResponse({"message": "Your card was added."})
-    return HttpResponse('error', status_code=401)
+    return HttpResponse('Error', status=401)

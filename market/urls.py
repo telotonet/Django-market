@@ -5,6 +5,7 @@ from django.conf                import settings
 from django.conf.urls.static    import static
 from django.contrib             import admin
 from django.contrib.auth.views  import LogoutView
+from django.views.generic.base import RedirectView
 
 
 
@@ -17,8 +18,9 @@ from marketing.views    import MarketingPreferenceUpdateView, MailchimpWebhookVi
 
 urlpatterns = [
     
-      
-
+    path('accounts/',   RedirectView.as_view(url='/account/')),
+    path('account/',    include('accounts.urls')),
+    path('accounts/',   include('accounts.passwords.urls')),
     path('',            home_page, name='home'),
     path('payment/',    payment_method_view, name='payment'),
     path('payment/create/', payment_method_create_view, name='payment_create'),
@@ -28,6 +30,7 @@ urlpatterns = [
     path('products/',   include('products.urls')),
     path('search/',     include('search.urls')),
     path('cart/',       include('carts.urls')),
+    path('settings/',   RedirectView.as_view(url='settings/email/')),
     path('settings/email/',             MarketingPreferenceUpdateView.as_view(), name='email'),
     path('webhooks/mailchimp/',         MailchimpWebhookView.as_view(), name='webohook'),
     path('checkout/address/reuse/',     checkout_address_reuse_view, name='reuse_address'),

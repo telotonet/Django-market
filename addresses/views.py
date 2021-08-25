@@ -11,7 +11,6 @@ def checkout_address_create_view(request):
     next_post = request.POST.get('next')
     redirect_path = next_get or next_post or None
     if form.is_valid():
-       
         instance = form.save(commit=False)
         billing_profile, billing_profile_created = BillingProfile.objects.new_or_get(request)
         if billing_profile is not None:
@@ -26,6 +25,8 @@ def checkout_address_create_view(request):
         if is_safe_url(redirect_path, request.get_host()):
             return redirect(redirect_path)
     return redirect('checkout')
+
+
 
 
 def checkout_address_reuse_view(request):

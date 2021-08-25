@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1> Account Homepage </h1> 
+<hr>
+
+<div class="card text-dark bg-light mb-3 my-3">
+  <div class="card-header"><h3>Support</h3></div>
+  <div class="card-body">
+        <div class='list-group'>
+            <a class='list-group-item' href='{% url "about" %}'> About </a>
+            <a class='list-group-item' href='{% url "contact" %}'> Contact </a>
+        </div>
+    </div>
+  </div>
+
+
+<div class="card text-dark bg-light mb-3 my-5">
+  <div class="card-header"><h3>Billing</h3></div>
+  <div class="card-body">
+
+    <div class='list-group'>
+            <a class='list-group-item' href='#'> Orders </a>
+            <a class='list-group-item' href='{% url "payment" %}'> Payment Method </a>
+            <a class='list-group-item' href='#'> Addresses </a>  
+    </div>
+
+  </div>
+</div>  
+<div class="card text-dark bg-light mb-3 my-5">
+  <div class="card-header"><h3>Configuration</h3></div>
+  <div class="card-body">
+        <div class='list-group'>
+            <a class='list-group-item' href='#'> Name </a>
+            <a class='list-group-item' href='#'> Email change </a>
+            <a class='list-group-item' href='#'> Password </a>  
+            <a class='list-group-item' href='{% url "email" %}' > Email Marketing </a>  
+        </div>
+  </div>
+</div>  
+<div class="card text-dark bg-light mb-3 my-5">
+  <div class="card-header"><h3>History</h3></div>
+  <div class="card-body">
+        <div class='list-group'>
+            <a class='list-group-item' href='#'> Objects Viewed </a>
+        </div>
+  </div>
+</div> 
+
+
+{% endblock content %}

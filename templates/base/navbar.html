@@ -6,6 +6,10 @@
 {% url 'register' as register_url%}
 {% url 'cart_home' as cart_url %}
 {% url 'logout' as logout_url %}
+{% url 'classhome' as classhome %}
+{% url 'email' as email %}
+
+
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5">
 <div class='container'>
@@ -27,8 +31,7 @@
         <li class="nav-item">
           <a class="nav-link {% if request.path == about_url %} active {%endif%}" href="{{about_url}}">About</a>
         </li>
-
-
+        
         {% if request.user.is_anonymous %}
 
         <li class="nav-item">
@@ -38,10 +41,22 @@
           <a class="nav-link {% if request.path == register_url %} active {%endif%}" href="{{register_url}}">Register</a>
         </li>
         {% else %}
-        <li class="nav-item">
-          <a class="nav-link {% if request.path == logout_url %} active {%endif%}" href="{{logout_url}}">Logout</a>
+        
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Account
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item {% if request.path == classhome%}active{%endif%}" href="{{classhome}}">Home</a></li>
+            <li><a class="dropdown-item {% if request.path == email%}active{%endif%}" href="{{email}}">Billing</a></li>
+            <li><a class="dropdown-item {% if request.path == email%}active{%endif%}" href="{{email}}">Config</a></li>
+            <li><a class="dropdown-item {% if request.path == email%}active{%endif%}" href="{{email}}">History</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{{logout_url}}">Logout</a></li>
+          </ul
         </li>
         {% endif %}
+        
         <div class='cart'>
         <li class="nav-item">
           <a class="nav-link {% if request.path == cart_url %} active {%endif%}" href="{{cart_url}}">

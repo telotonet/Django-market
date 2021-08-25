@@ -8,6 +8,7 @@ def home_page(request):
             'premium':'YEAHHHHH'}
     return render(request, 'home_page.html', context)
 
+
 def contact_page(request):
     contact_form = ContactForm(request.POST or None)
     context = { 'title':'Contact page!',

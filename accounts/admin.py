@@ -18,7 +18,7 @@ class UserAdmin(BaseUserAdmin):
     fieldsets     = ( 
         ('Main Info', {'fields': ('email', 'password')}),
         ('Personal Info', {'fields': ('full_name', )}),
-        ('Permissions', {'fields': ('admin', 'active', 'staff')}),
+        ('Permissions', {'fields': ('admin', 'is_active', 'staff')}),
     )  # Update users info
     add_fieldsets = (
         ("Create a new user", {'classes': ('wide', ),

@@ -1,12 +1,27 @@
-from django.shortcuts import render
 from django.contrib.auth import login, authenticate, get_user_model
-from django.shortcuts import render, redirect
-from .forms import LoginForm, RegisterForm, GuestForm
-from django.views.generic import CreateView, FormView
+from django.shortcuts import redirect, render
+from .forms import LoginForm, RegisterForm, GuestForm, User
+from django.views.generic import CreateView, FormView, DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.utils.http import is_safe_url
 from .models import Guest
 from .signals import user_logged_in
 
+
+class AccountHomeView(LoginRequiredMixin, DetailView):
+    redirect_field_name = 'next'
+    template_name       = 'accounts/home.html'
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(**kwargs)
+     
+    def get_object(self):
+        return self.request.user 
+
+@login_required(redirect_field_name='next')
+def account_home_view(request):
+    return render(request, "accounts/home.html", {})
 
 def guest_login_view(request):
     form = GuestForm(request.POST or None)
@@ -37,6 +52,9 @@ class LoginView(FormView):
         password = form.cleaned_data.get('password')
         user = authenticate(request, username = email, password = password)
         if user is not None:
+            if not user.is_active:
+                messages.error(request, "Account is inactive")
+                return super().form_invalid(form)
             try:
                 del request.session['guest']
             except:

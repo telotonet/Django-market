@@ -29,11 +29,9 @@ class MarketingPreferenceUpdateView(SuccessMessageMixin, UpdateView):
         user         = self.request.user
         obj, created = MarketingPreference.objects.get_or_create(user=user)
         return obj
-    
-    
-    
-    
-    
+
+
+
     
 MAILCHIMP_EMAIL_LIST_ID = getattr(settings, 'MAILCHIMP_EMAIL_LIST_ID', '1815fe83c0')
     
