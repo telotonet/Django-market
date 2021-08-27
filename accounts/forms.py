@@ -1,13 +1,27 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model   
-from django.forms import fields 
-
+from .models import EmailActivation
 from django.contrib.auth.forms import ReadOnlyPasswordHashField # Скрытый пароль
-
+from django.urls import reverse
+from django.utils.safestring import mark_safe
 
 
 User = get_user_model()
+
+
+class ReactivateForm(forms.Form):
+    email = forms.EmailField()
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        qs = EmailActivation.objects.email_exists(email)
+        if not qs.exists():
+            register_link = reverse('register')
+            msg = "This email does not exists, would you like to <a href='{register_link}'>register?</a>"
+            return ValidationError(mark_safe(msg))
+        return email
+    
+    
 
 class UserAdminCreationForm(forms.ModelForm):
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class':'form-control'}))
@@ -47,8 +61,7 @@ class GuestForm(forms.Form):
 class LoginForm(forms.Form):
     email = forms.EmailField(label='Email',widget=forms.EmailInput(attrs={'class':'form-control'}))
     password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class':'form-control'}))
-    
-    
+
 class RegisterForm(forms.ModelForm):
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class':'form-control'}))
     password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput(attrs={'class':'form-control'}))
@@ -80,9 +93,11 @@ class RegisterForm(forms.ModelForm):
     def save(self, commit=True):
         user = super().save(commit=False)
         user.set_password(self.cleaned_data['password1'])
-        user.is_active = False # send confirmation email
+        user.is_active = False # send confirmation email via signals
+        # obj = EmailActivation.objects.create(user=user)
+        # obj.send_activation_email()
         if commit:
             user.save()
         return user   
     
-    
+

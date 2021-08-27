@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.base_user import BaseUserManager
-from .models import Guest
+from .models import Guest, EmailActivation
 from django.contrib.auth import get_user_model
 from .forms import UserAdminCreationForm, UserAdminChangeForm
 
@@ -8,6 +8,13 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 User = get_user_model()
+
+class EmailActivationAdmin(admin.ModelAdmin):
+    class Meta:
+        model = EmailActivation
+admin.site.register(EmailActivation, EmailActivationAdmin)
+
+
 
 class UserAdmin(BaseUserAdmin):
     form          = UserAdminChangeForm   # Update users info

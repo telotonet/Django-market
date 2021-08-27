@@ -18,7 +18,6 @@ from marketing.views    import MarketingPreferenceUpdateView, MailchimpWebhookVi
 
 urlpatterns = [
     
-    path('accounts/',   RedirectView.as_view(url='/account/')),
     path('account/',    include('accounts.urls')),
     path('accounts/',   include('accounts.passwords.urls')),
     path('',            home_page, name='home'),

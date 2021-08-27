@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<div class='row'>
+
+      <div class="col-12 text-center py-5">
+            <h1 class='my-5 py-5'>Some Error occurred!</h1>
+      </div>
+
+      <div class='col-12 text-center'>
+            
+            <form method='POST' action=''>{% csrf_token %}
+                  {{form.as_p}}
+                  <input class='btn btn-primary' type ='submit' value='Resend Activation'>
+            </form>
+      </div>
+</div>
+{% endblock %}

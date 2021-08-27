@@ -6,6 +6,16 @@ def random_string_generator(size=4, chars=string.digits):
     return ''.join(random.choice(chars) for _ in range(size))
 
 
+def unique_key_generator(instance):
+    size = random.randint(30,45)
+    key = random_string_generator(size=size, chars=(string.digits + string.ascii_letters))
+    Klass = instance.__class__
+    qs_exists = Klass.objects.filter(key=key).exists()
+    if qs_exists:
+        return unique_key_generator(instance)
+    return key
+
+
 
 def unique_order_id_generator(instance):
     
